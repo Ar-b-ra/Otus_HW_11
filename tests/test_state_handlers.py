@@ -20,3 +20,11 @@ class TestStateHandlers(unittest.TestCase):
         self.thread_worker.run()
         stop_command.assert_called_once()
 
+    @patch("queue_worker.QueueWorker.stop")
+    def test_from_move_to_hard_stop(self, stop_command):
+        self.thread_worker.put_command("MoveToCommand")
+        self.thread_worker.run()
+        self.assertTrue(isinstance(self.thread_worker.queue_worker.current_state, MoveToState))
+        self.thread_worker.put_command("HardStop")
+        stop_command.assert_called_once()
+
