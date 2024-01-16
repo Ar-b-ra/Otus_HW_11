@@ -15,10 +15,10 @@ class ThreadWorker:
 
     def hard_stop(self):
         self.queue_worker.stop()
-        self.thread.join()
+        self.thread.join(0)
 
     def soft_stop(self):
-        self.thread.join()
+        self.thread.join(0)
 
     def run(self):
         self.queue_worker.is_working = True
